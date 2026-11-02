@@ -4,6 +4,13 @@ echo ==========================================
 echo   Build CDIP e-Carta FTP Client
 echo ==========================================
 
+if defined JDK21_HOME (
+    set "JAVA_HOME=%JDK21_HOME%"
+    echo [INFO] Usando JDK21_HOME em %JAVA_HOME%
+) else if defined JAVA_HOME (
+    echo [INFO] Usando JAVA_HOME em %JAVA_HOME%
+)
+
 where mvn >nul 2>&1
 if errorlevel 1 (
     echo [ERRO] Maven nao encontrado no PATH.

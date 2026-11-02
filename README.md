@@ -65,6 +65,20 @@ target/cdip-ecarta-ftp-client-all.jar
 build_app.bat
 ```
 
+## Testes
+
+### Executar a suite de testes
+
+```bash
+mvn -q test
+```
+
+Os testes atuais cobrem:
+
+- regras de validacao por tipo de matriz;
+- persistencia criptografada do estado local;
+- processamento de CSV com geracao de ZIPs de servico e resposta.
+
 ## Execucao
 
 ### Rodando o JAR
