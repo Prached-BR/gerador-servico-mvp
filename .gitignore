@@ -1,0 +1,29 @@
+# Maven / Java
+target/
+*.class
+*.log
+hs_err_pid*
+replay_pid*
+
+# jpackage / distribuicao
+dist/
+*.exe
+*.msi
+*.zip
+*.7z
+
+# Runtime local da aplicacao
+dados/
+ENVIAR/
+ENVIADOS/
+RECEBIDOS/
+config/
+
+# IDE / editor
+.idea/
+.vscode/
+*.iml
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
