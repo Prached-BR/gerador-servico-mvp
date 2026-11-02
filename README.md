@@ -99,4 +99,4 @@ dist/cdip-ecarta-ftp-client/
 
 ## Publicacao recomendada
 
-Para a entrega academica, o ideal e publicar este projeto em repositorio GitHub dedicado, evitando misturar artefatos antigos do workspace principal com o MVP Java atual.
+Para a entrega, publicar este projeto em repositorio GitHub dedicado, evitando misturar artefatos antigos do workspace principal com o MVP Java atual.
