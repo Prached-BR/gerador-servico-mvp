@@ -1,4 +1,4 @@
-# CDIP e-Carta FTP Client
+# GERA 'servico' e-Carta com FTP Client
 
 Aplicacao desktop Java para processamento de planilhas de servico e-Carta, geracao de arquivos padronizados e operacoes de envio/recebimento por FTP.
 
