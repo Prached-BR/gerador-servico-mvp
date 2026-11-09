@@ -52,6 +52,8 @@ final class MainFrame extends JFrame {
 
     private AppState state;
     private boolean schedulerBusy;
+    private boolean highContrastEnabled;
+    private float fontScale = 1.0f;
 
     private final JTextField spreadsheetField = new JTextField();
     private final JTextField pdfFolderField = new JTextField();
@@ -67,6 +69,7 @@ final class MainFrame extends JFrame {
     private final JPasswordField ftpPasswordField = new JPasswordField();
     private final JTextField ftpSendDirField = new JTextField();
     private final JTextField ftpReceiveDirField = new JTextField();
+    private final JButton highContrastButton = new JButton("Ativar alto contraste");
     private final JLabel pendingLabel = new JLabel();
     private final JTextArea logArea = new JTextArea();
     private final Timer schedulerTimer;
@@ -125,6 +128,20 @@ final class MainFrame extends JFrame {
         actions.add(button("Enviar respostas", e -> sendPendingResponses()));
         actions.add(button("Baixar recibos agora", e -> attemptDownloads(true)));
         actions.add(button("Testar FTP", e -> testFtp()));
+        JButton decreaseFontButton = button("A-", e -> adjustFontScale(-0.1f));
+        decreaseFontButton.getAccessibleContext().setAccessibleName("Reduzir tamanho do texto");
+        decreaseFontButton.getAccessibleContext().setAccessibleDescription("Reduz o tamanho do texto em dez por cento.");
+        actions.add(decreaseFontButton);
+        JButton increaseFontButton = button("A+", e -> adjustFontScale(0.1f));
+        increaseFontButton.getAccessibleContext().setAccessibleName("Aumentar tamanho do texto");
+        increaseFontButton.getAccessibleContext().setAccessibleDescription("Aumenta o tamanho do texto em dez por cento.");
+        actions.add(increaseFontButton);
+        highContrastButton.getAccessibleContext().setAccessibleName("Alto contraste");
+        highContrastButton.getAccessibleContext().setAccessibleDescription(
+            "Ativa ou desativa alto contraste para melhorar a legibilidade."
+        );
+        highContrastButton.addActionListener(e -> toggleHighContrast());
+        actions.add(highContrastButton);
         actions.add(pendingLabel);
 
         logArea.setEditable(false);
@@ -135,6 +152,26 @@ final class MainFrame extends JFrame {
         add(actions, BorderLayout.CENTER);
         add(new JScrollPane(logArea), BorderLayout.SOUTH);
         ((JScrollPane) getContentPane().getComponent(2)).setPreferredSize(new Dimension(1000, 300));
+    }
+
+    private void toggleHighContrast() {
+        highContrastEnabled = !highContrastEnabled;
+        if (highContrastEnabled) {
+            AccessibilityTheme.apply(this);
+            highContrastButton.setText("Desativar alto contraste");
+            appendLog("Modo de alto contraste ativado.");
+        } else {
+            javax.swing.SwingUtilities.updateComponentTreeUI(this);
+            AccessibilityTheme.scaleFonts(this, fontScale);
+            highContrastButton.setText("Ativar alto contraste");
+            appendLog("Modo de alto contraste desativado.");
+        }
+    }
+
+    private void adjustFontScale(float adjustment) {
+        fontScale = Math.max(0.8f, Math.min(1.6f, fontScale + adjustment));
+        AccessibilityTheme.scaleFonts(this, fontScale);
+        appendLog("Tamanho do texto: " + Math.round(fontScale * 100) + "%.");
     }
 
     private JButton button(String label, java.awt.event.ActionListener listener) {
